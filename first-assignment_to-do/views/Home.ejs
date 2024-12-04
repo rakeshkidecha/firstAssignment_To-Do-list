@@ -144,19 +144,29 @@
                 <h3>TO DO</h3>
                 <% if(allTask.length <= 0) { %>
                     <p>No Task Avalable..</p>
-                <% } %>
+                <% } else {
+                    var pendingCount= 0;
+                    allTask.map((v,i)=>{
+                        if(v.taskProcess == "Pending"){ 
+                            pendingCount++;
+                        }
+                    })
+                } %>
 
-                <% allTask.map((item,i)=>{ 
-                    if(item.taskProcess==='Pending') { 
-                        isPandingTask = true %>
-                        <li>
-                            <p><%= item.taskProcess %></p>
-                            <p><%= item.task %></p>
-                            <span>- <%= item.date %></span>
-                            <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
-                        </li>
-                    <% };
-                })%>
+                <% if(pendingCount==0){ %>
+                    <p>No Pending Task Available</p>
+                <% } else{ 
+                    allTask.map((item,i)=>{ 
+                        if(item.taskProcess==='Pending') { %>
+                            <li>
+                                <p><%= item.taskProcess %></p>
+                                <p><%= item.task %></p>
+                                <span>- <%= item.date %></span>
+                                <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
+                            </li>
+                        <% };
+                    });
+                } %>
             </ul>
         </div>
         <div class="taskBox">
@@ -164,18 +174,29 @@
                 <h3>IN PROGRESS</h3>
                 <% if(allTask.length <= 0) { %>
                     <p>No Task Avalable..</p>
-                <% } %>
-                <% allTask.map((item,i)=>{ 
-                    if(item.taskProcess==='Progress') { 
-                        isProgressTask = true %>
-                        <li>
-                            <p><%= item.taskProcess %></p>
-                            <p><%= item.task %></p>
-                            <span>- <%= item.date %></span>
-                            <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
-                        </li>
-                    <% };
-                })%>
+                <% } else {
+                    var progressCount= 0;
+                    allTask.map((v,i)=>{
+                        if(v.taskProcess == "Progress"){ 
+                            progressCount++;
+                        }
+                    })
+                } %>
+
+                <% if(progressCount==0){ %>
+                    <p>No Progress Task Available</p>
+                <% } else{ 
+                    allTask.map((item,i)=>{ 
+                        if(item.taskProcess==='Progress') { %>
+                            <li>
+                                <p><%= item.taskProcess %></p>
+                                <p><%= item.task %></p>
+                                <span>- <%= item.date %></span>
+                                <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
+                            </li>
+                        <% };
+                    });
+                } %>
             </ul>
         </div>
         <div class="taskBox">
@@ -183,19 +204,29 @@
                 <h3>COMPLETED</h3>
                 <% if(allTask.length <= 0) { %>
                     <p>No Task Avalable..</p>
-                <% } %>
+                <% } else {
+                    var completedTask= 0;
+                    allTask.map((v,i)=>{
+                        if(v.taskProcess == "Completed"){ 
+                            completedTask++;
+                        }
+                    })
+                } %>
 
-                <% allTask.map((item,i)=>{ 
-                    if(item.taskProcess==='Completed') { 
-                        isCompleteTask = true %>
-                        <li>
-                            <p><%= item.taskProcess %></p>
-                            <p><%= item.task %></p>
-                            <span>- <%= item.date %></span>
-                            <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
-                        </li>
-                    <% };
-                })%>
+                <% if(completedTask==0){ %>
+                    <p>No Completed Task Available</p>
+                <% } else{ 
+                    allTask.map((item,i)=>{ 
+                        if(item.taskProcess==='Completed') { %>
+                            <li>
+                                <p><%= item.taskProcess %></p>
+                                <p><%= item.task %></p>
+                                <span>- <%= item.date %></span>
+                                <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
+                            </li>
+                        <% };
+                    });
+                } %>
             </ul>
         </div>
     </div>
