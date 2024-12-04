@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do-list</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: rgb(21, 68, 169);
+            font-family: sans-serif;
+        }
+        h1{
+            text-align: center;
+            color: white;
+            margin: 40px 0;
+        }
+        form{
+            width: 40%;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input,select{
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid rgb(21, 68, 169);
+            padding: 7px 14px;
+            margin: 10px 0;
+            border-radius: 7px;
+        }
+        button{
+            padding: 10px 20px;
+            border: none;
+            background-color: rgb(21, 68, 169) ;
+            color: white;
+            border-radius: 7px;
+            margin-top: 10px;
+            transition: all 0.3s linear;
+        }
+        button:hover{
+            transform: scale(1.1);
+        }
+        .allTask{
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .allTask .taskBox{
+            width: 33.33%;
+        }
+        ul{
+            background-color: #a5aab6;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        ul h3{
+            margin-bottom: 10px ;
+            font-size: 18px;
+        }
+        ul li{
+            list-style: none;
+            background-color: white;
+            padding:14px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+        ul li p{
+            margin: 5px 0;
+        }
+        ul li p:first-child{
+            color: white;
+            background-color: rgb(142, 64, 35);
+            padding: 7px 14px;
+            display: inline-block;
+            border-radius: 7px;
+        }
+        .allTask .taskBox:nth-child(2) ul li p:first-child{
+            background-color: rgb(130, 130, 27);
+        }
+        .allTask .taskBox:last-child ul li p:first-child{
+            background-color: green;
+        }
+        ul li span{
+            background-color: #cecfd3;
+            padding: 7px 14px;
+            font-size: 13px;
+            margin:10px 0;
+            display: inline-block;
+        }
+        ul li a{
+            text-decoration: none;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: red;
+            position: absolute;
+            right: -10px;
+            top: -15px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            transition: all 0.3s linear;
+        }
+        ul li a:hover{
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <form method="post" action="/insertTask">
+        <label for="task">Enter your task :-</label>
+        <input type="text" name="task" placeholder="Enter task here"/>
+        <label for="taskProcess">Select your task process :-</label>
+        <select name="taskProcess">
+            <option value="">--select--</option>
+            <option value="Pending">pending</option>
+            <option value="Progress">progress</option>
+            <option value="Completed">completed</option>
+        </select>
+        <label for="date">Choose Date:-</label>
+        <input type="date" name="date" />
+        <div style="text-align: center;">
+            <button type="submit">Add</button>
+        </div>
+    </form>
+
+    <div class="allTask">
+        <div class="taskBox">
+            <ul>
+                <h3>TO DO</h3>
+                <% if(allTask.length <= 0) { %>
+                    <p>No Task Avalable..</p>
+                <% } %>
+
+                <% allTask.map((item,i)=>{ 
+                    if(item.taskProcess==='Pending') { 
+                        isPandingTask = true %>
+                        <li>
+                            <p><%= item.taskProcess %></p>
+                            <p><%= item.task %></p>
+                            <span>- <%= item.date %></span>
+                            <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
+                        </li>
+                    <% };
+                })%>
+            </ul>
+        </div>
+        <div class="taskBox">
+            <ul>
+                <h3>IN PROGRESS</h3>
+                <% if(allTask.length <= 0) { %>
+                    <p>No Task Avalable..</p>
+                <% } %>
+                <% allTask.map((item,i)=>{ 
+                    if(item.taskProcess==='Progress') { 
+                        isProgressTask = true %>
+                        <li>
+                            <p><%= item.taskProcess %></p>
+                            <p><%= item.task %></p>
+                            <span>- <%= item.date %></span>
+                            <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
+                        </li>
+                    <% };
+                })%>
+            </ul>
+        </div>
+        <div class="taskBox">
+            <ul>
+                <h3>COMPLETED</h3>
+                <% if(allTask.length <= 0) { %>
+                    <p>No Task Avalable..</p>
+                <% } %>
+
+                <% allTask.map((item,i)=>{ 
+                    if(item.taskProcess==='Completed') { 
+                        isCompleteTask = true %>
+                        <li>
+                            <p><%= item.taskProcess %></p>
+                            <p><%= item.task %></p>
+                            <span>- <%= item.date %></span>
+                            <a href="/deleteTask/?pos=<%= i %>"><i class="ri-delete-bin-6-fill"></i></a>
+                        </li>
+                    <% };
+                })%>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
